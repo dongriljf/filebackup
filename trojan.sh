@@ -2106,9 +2106,9 @@ rm -rf v2ray.tar.xz
 			{
 				"type": "field",
 				"domain": [
-						"regexp:(api|ps|sv|offnavi|newvector|ulog\\.imap|newloc)(\\.map|)\\.(baidu|n\\.shifen)\\.com",
-						"regexp:(.+\\.|^)(360|so)\\.(cn|com)",
-						"regexp:(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)",
+						"domain:baidu.com",
+						"domain:360.com",
+						"geosite:qihoo360"
 						"domain:qq.com",
 						"domain:sina.com",
 						"geosite:qihoo360"

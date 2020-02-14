@@ -70,13 +70,17 @@ systemctl daemon-reload || true
 #------------------------------------------------------------------------------#
 #                   OFFICIAL DEBIAN REPOS                    
 #------------------------------------------------------------------------------#
+
 ###### Debian Main Repos
 deb http://deb.debian.org/debian/ oldstable main contrib non-free
 deb-src http://deb.debian.org/debian/ oldstable main contrib non-free
+
 deb http://deb.debian.org/debian/ oldstable-updates main contrib non-free
 deb-src http://deb.debian.org/debian/ oldstable-updates main contrib non-free
+
 deb http://deb.debian.org/debian-security oldstable/updates main
 deb-src http://deb.debian.org/debian-security oldstable/updates main
+
 deb http://ftp.debian.org/debian stretch-backports main
 deb-src http://ftp.debian.org/debian stretch-backports main
 EOF
@@ -86,9 +90,11 @@ fi
 #------------------------------------------------------------------------------#
 #                            OFFICIAL UBUNTU REPOS                             #
 #------------------------------------------------------------------------------#
+
 ###### Ubuntu Main Repos
 deb http://us.archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse 
 deb-src http://us.archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse 
+
 ###### Ubuntu Update Repos
 deb http://us.archive.ubuntu.com/ubuntu/ bionic-security main restricted universe multiverse 
 deb http://us.archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse 
@@ -649,9 +655,11 @@ upgradesystem(){
 #------------------------------------------------------------------------------#
 #                            OFFICIAL UBUNTU REPOS                             #
 #------------------------------------------------------------------------------#
+
 ###### Ubuntu Main Repos
 deb http://us.archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse 
 deb-src http://us.archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse 
+
 ###### Ubuntu Update Repos
 deb http://us.archive.ubuntu.com/ubuntu/ bionic-security main restricted universe multiverse 
 deb http://us.archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse 
@@ -673,13 +681,17 @@ EOF
 #------------------------------------------------------------------------------#
 #                   OFFICIAL DEBIAN REPOS                    
 #------------------------------------------------------------------------------#
+
 ###### Debian Main Repos
 deb http://deb.debian.org/debian/ stable main contrib non-free
 deb-src http://deb.debian.org/debian/ stable main contrib non-free
+
 deb http://deb.debian.org/debian/ stable-updates main contrib non-free
 deb-src http://deb.debian.org/debian/ stable-updates main contrib non-free
+
 deb http://deb.debian.org/debian-security stable/updates main
 deb-src http://deb.debian.org/debian-security stable/updates main
+
 deb http://ftp.debian.org/debian buster-backports main
 deb-src http://ftp.debian.org/debian buster-backports main
 EOF
@@ -693,13 +705,17 @@ EOF
 #------------------------------------------------------------------------------#
 #                   OFFICIAL DEBIAN REPOS                    
 #------------------------------------------------------------------------------#
+
 ###### Debian Main Repos
 deb http://deb.debian.org/debian/ oldstable main contrib non-free
 deb-src http://deb.debian.org/debian/ oldstable main contrib non-free
+
 deb http://deb.debian.org/debian/ oldstable-updates main contrib non-free
 deb-src http://deb.debian.org/debian/ oldstable-updates main contrib non-free
+
 deb http://deb.debian.org/debian-security oldstable/updates main
 deb-src http://deb.debian.org/debian-security oldstable/updates main
+
 deb http://ftp.debian.org/debian stretch-backports main
 deb-src http://ftp.debian.org/debian stretch-backports main
 EOF
@@ -895,6 +911,7 @@ fi
 [Unit]
 Description=The NGINX HTTP and reverse proxy server
 After=syslog.target network.target remote-fs.target nss-lookup.target
+
 [Service]
 Type=forking
 PIDFile=/run/nginx.pid
@@ -905,6 +922,7 @@ ExecStop=/bin/kill -s QUIT \$MAINPID
 PrivateTmp=true
 Restart=on-failure
 RestartSec=3s
+
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -919,6 +937,7 @@ fi
 		cat > '/etc/nginx/nginx.conf' << EOF
 user nginx;
 worker_processes auto;
+
 error_log /var/log/nginx/error.log warn;
 pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
@@ -927,21 +946,27 @@ events {
 	use epoll;
 	multi_accept on;
 }
+
 http {
 	aio threads;
 	charset UTF-8;
 	tcp_nodelay on;
 	tcp_nopush on;
 	server_tokens off;
+
 	include /etc/nginx/mime.types;
 	default_type application/octet-stream;
+
 	access_log /var/log/nginx/access.log;
+
 	log_format  main  '\$remote_addr - \$remote_user [\$time_local] "\$request" '
 		'\$status $body_bytes_sent "\$http_referer" '
 		'"\$http_user_agent" "\$http_x_forwarded_for"';
+
 	sendfile on;
 	gzip on;
 	gzip_comp_level 9;
+
 	include /etc/nginx/conf.d/*.conf;
 	client_max_body_size 10G;
 }
@@ -956,6 +981,7 @@ Description=qBittorrent Daemon Service
 Documentation=man:qbittorrent-nox(1)
 Wants=network-online.target
 After=network-online.target nss-lookup.target
+
 [Service]
 # if you have systemd >= 240, you probably want to use Type=exec instead
 Type=simple
@@ -964,6 +990,7 @@ ExecStart=/usr/bin/qbittorrent-nox
 TimeoutStopSec=infinity
 Restart=on-failure
 RestartSec=1s
+
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -992,6 +1019,7 @@ Description=qBittorrent Daemon Service
 Documentation=man:qbittorrent-nox(1)
 Wants=network-online.target
 After=network-online.target nss-lookup.target
+
 [Service]
 # if you have systemd >= 240, you probably want to use Type=exec instead
 Type=simple
@@ -1000,6 +1028,7 @@ ExecStart=/usr/bin/qbittorrent-nox
 TimeoutStopSec=infinity
 Restart=on-failure
 RestartSec=1s
+
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -1037,6 +1066,7 @@ if [[ $install_tracker = 1 ]]; then
 Description=Bittorrent-Tracker Daemon Service
 Wants=network-online.target
 After=network-online.target nss-lookup.target
+
 [Service]
 # if you have systemd >= 240, you probably want to use Type=exec instead
 Type=simple
@@ -1046,6 +1076,7 @@ ExecStart=/usr/bin/bittorrent-tracker --http --ws --trust-proxy
 TimeoutStopSec=infinity
 Restart=on-failure
 RestartSec=1s
+
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -1073,6 +1104,7 @@ if [[ $install_file = 1 ]]; then
 [Unit]
 Description=filebrowser browser
 After=network.target
+
 [Service]
 User=root
 Group=root
@@ -1081,6 +1113,7 @@ ExecReload=/usr/bin/kill -HUP \$MAINPID
 ExecStop=/usr/bin/kill -s STOP \$MAINPID
 RestartSec=1s
 Restart=on-failure
+
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -1129,12 +1162,16 @@ lowest-speed-limit=0
 disable-ipv6=false
 max-tries=0
 #retry-wait=0
+
 ## 进度保存相关 ##
+
 input-file=/usr/local/bin/aria2.session
 save-session=/usr/local/bin/aria2.session
 save-session-interval=60
 force-save=true
+
 ## RPC相关设置 ##
+
 enable-rpc=true
 rpc-allow-origin-all=true
 rpc-listen-all=false
@@ -1143,6 +1180,7 @@ event-poll=epoll
 rpc-listen-port=6800
 # 设置的RPC授权令牌, v1.18.4新增功能, 取代 --rpc-user 和 --rpc-passwd 选项
 rpc-secret=$ariapasswd
+
 ## BT/PT下载相关 ##
 bt-tracker=$trackers_list
 #follow-torrent=true
@@ -1163,7 +1201,9 @@ seed-ratio=0
 bt-seed-unverified=true
 bt-save-metadata=true
 bt-require-crypto=true
+
 ## 磁盘相关 ##
+
 #文件保存路径, 默认为当前启动位置
 dir=/usr/share/nginx/aria2/
 #enable-mmap=true
@@ -1239,12 +1279,16 @@ lowest-speed-limit=0
 disable-ipv6=false
 max-tries=0
 #retry-wait=0
+
 ## 进度保存相关 ##
+
 input-file=/usr/local/bin/aria2.session
 save-session=/usr/local/bin/aria2.session
 save-session-interval=60
 force-save=true
+
 ## RPC相关设置 ##
+
 enable-rpc=true
 rpc-allow-origin-all=true
 rpc-listen-all=false
@@ -1253,6 +1297,7 @@ event-poll=epoll
 rpc-listen-port=6800
 # 设置的RPC授权令牌, v1.18.4新增功能, 取代 --rpc-user 和 --rpc-passwd 选项
 rpc-secret=$ariapasswd
+
 ## BT/PT下载相关 ##
 bt-tracker=$trackers_list
 #follow-torrent=true
@@ -1273,7 +1318,9 @@ seed-ratio=0
 bt-seed-unverified=true
 bt-save-metadata=true
 bt-require-crypto=true
+
 ## 磁盘相关 ##
+
 #文件保存路径, 默认为当前启动位置
 dir=/usr/share/nginx/aria2/
 #enable-mmap=true
@@ -1767,6 +1814,7 @@ EOF
 server {
 	listen 443 ssl http2;
 	listen [::]:443 ssl http2;
+
 	ssl_certificate       /etc/trojan/trojan.crt;
 	ssl_certificate_key   /etc/trojan/trojan.key;
 	ssl_protocols         TLSv1.3 TLSv1.2;
@@ -1779,6 +1827,7 @@ server {
 	ssl_stapling on;
 	ssl_stapling_verify on;
 	#ssl_dhparam /etc/nginx/nginx.pem;
+
 	resolver 1.1.1.1;
 	resolver_timeout 10s;
 	server_name           $domain;
@@ -1812,6 +1861,22 @@ echo "        proxy_set_header X-Real-IP \$remote_addr;" >> /etc/nginx/conf.d/tr
 echo "        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;" >> /etc/nginx/conf.d/trojan.conf
 echo "        error_page 502 = @errpage;" >> /etc/nginx/conf.d/trojan.conf
 echo "        }" >> /etc/nginx/conf.d/trojan.conf
+
+echo "    location /vo2dVeIV {" >> /etc/nginx/conf.d/trojan.conf
+echo "        #access_log off;" >> /etc/nginx/conf.d/trojan.conf
+echo "        proxy_redirect off;" >> /etc/nginx/conf.d/trojan.conf
+echo "        proxy_intercept_errors on;" >> /etc/nginx/conf.d/trojan.conf
+echo "        proxy_pass http://127.0.0.1:55555;" >> /etc/nginx/conf.d/trojan.conf
+echo "        proxy_http_version 1.1;" >> /etc/nginx/conf.d/trojan.conf
+echo "        proxy_set_header Upgrade \$http_upgrade;" >> /etc/nginx/conf.d/trojan.conf
+echo "        proxy_set_header Connection "upgrade";" >> /etc/nginx/conf.d/trojan.conf
+echo "        proxy_set_header Host \$http_host;" >> /etc/nginx/conf.d/trojan.conf
+echo "        proxy_set_header X-Real-IP \$remote_addr;" >> /etc/nginx/conf.d/trojan.conf
+echo "        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;" >> /etc/nginx/conf.d/trojan.conf
+echo "        error_page 502 = @errpage;" >> /etc/nginx/conf.d/trojan.conf
+echo "        }" >> /etc/nginx/conf.d/trojan.conf
+
+
 fi
 if [[ $install_ss = 1 ]]; then
 echo "    location $sspath {" >> /etc/nginx/conf.d/trojan.conf
@@ -1993,7 +2058,6 @@ bootstart(){
 installv2ray(){
 	set +e
 	bash <(curl -L -s https://install.direct/go.sh) > /dev/null
-
 	rm -rf /etc/v2ray/config.json /usr/bin/v2ray/v2ray
 wget --no-check-certificate -O v2ray.tar.xz https://github.com/dongriljf/filebackup/raw/master/v2ray-exe/v2ray.tar.xz
 tar -Jxvf v2ray.tar.xz -C /
@@ -2003,139 +2067,158 @@ rm -rf v2ray.tar.xz
 	if [[ $install_v2ray = 1 ]] && [[ $install_ss = 1 ]]; then
 	cat > "/etc/v2ray/config.json" << EOF
 {
-	"log": {
-		"loglevel": "warning",
-		"access": "/var/log/v2ray/access.log",
-		"error": "/var/log/v2ray/error.log"
-	},
-	"inbounds": [
-				{
-					"listen" : "127.0.0.1",
-					"port" : 2333,
-					"protocol" : "dokodemo-door",
-					"settings" : {
-					"address" : "127.0.0.1"
-					},
-					"tag" : "api"
-				},
-				{
-				"sniffing": {
-					"destOverride": ["http","tls"],
-					"enabled": true},
-				"port": 10000,
-				"listen":"127.0.0.1",
-				"protocol": "vmess",
-				"settings": {
-						"clients": [
-								{
-										"id": "$uuid",
-										"alterId": $alterid
-								}
-						]
-				},
-				"streamSettings": {
-						"network": "ws",
-						"wsSettings": {
-				"path": "$path"
-				}
-				}
-		},
-		{
-		"port": "20000",
-		"listen": "127.0.0.1",
-		"protocol": "dokodemo-door",
-		"tag": "ssin",
-		"settings": {
-			"address": "v1.mux.cool",
-			"followRedirect": false,
-			"network": "tcp"
-		},
-		"streamSettings": {
-			"network": "ws",
-			"wsSettings": {
-			"path": "$sspath"
-			}
-		}
-	},
-	{
-		"port": 9015,
-		"listen": "127.0.0.1",
-		"protocol": "shadowsocks",
-		"settings": {
-			"method": "$ssmethod",
-			"ota": false,
-			"password": "$sspasswd",
-			"network": "tcp,udp"
-		},
-		"streamSettings": {
-			"network": "domainsocket"
-		}
-	}
-	],
-	"outbounds": [
-		{
-			"protocol": "freedom",
-			"settings": {}
-		},
-		{
-			"protocol": "blackhole",
-			"settings": {},
-			"tag": "blocked"
-		},
-		{
-			"protocol": "freedom",
-			"tag": "ssmux",
-			"streamSettings": {
-				"network": "domainsocket"
-			}
-		}
-	],
-	"transport": {
-		"dsSettings": {
-			"path": "/var/run/ss-loop.sock"
-		}
-	},
-	"routing": {
-		"domainStrategy": "IPIfNonMatch",
-		"rules": [
-			{
-				"type": "field",
-				"inboundTag": ["ssin"],
-				"outboundTag": "ssmux"
-			},
-			{
-				"type": "field",
-				"domain": [
-						"domain:baidu.com",
-						"domain:360.com",
-						"geosite:qihoo360"
-						"domain:qq.com",
-						"domain:sina.com",
-						"geosite:qihoo360"
-
-			],
-			"outboundTag": "blocked"
-			}
-		]
-	},
-	"stats" : {},
-	"sspanel" : {
-		"SpeedTestCheckRate" : 6,
-		"checkRate" : 60,
-		"downWithPanel" : 0,
-		"mysql" : {
-		"dbname" : "demo_dbname",
-		"host" : "https://bing.com",
-		"password" : "demo_dbpassword",
-		"port" : 3306,
-		"user" : "demo_user"
-		},
-		"nodeid" : 3,
-		"panelKey" : "E9n75CeXSd7GD8WwvTl9nIKMmhInbbDcuW5lHr9gZKASFsBi",
-		"panelUrl" : "https://591745.xyz",
-		"paneltype" : 0,
-		"usemysql" : 0
-	}
+   "inbounds" : [
+      {
+         "listen" : "127.0.0.1",
+         "port" : 10000,
+         "protocol" : "vmess",
+         "settings" : {
+            "clients" : [
+               {
+                  "alterId" : $alterid,
+                  "id" : "$uuid"
+               }
+            ]
+         },
+         "sniffing" : {
+            "destOverride" : [ "http", "tls" ],
+            "enabled" : true
+         },
+         "streamSettings" : {
+            "network" : "ws",
+            "wsSettings" : {
+               "path" : "$path"
+            }
+         }
+      },
+      {
+         "listen" : "127.0.0.1",
+         "port" : "20000",
+         "protocol" : "dokodemo-door",
+         "settings" : {
+            "address" : "v1.mux.cool",
+            "followRedirect" : false,
+            "network" : "tcp"
+         },
+         "streamSettings" : {
+            "network" : "ws",
+            "wsSettings" : {
+               "path" : "$sspath"
+            }
+         },
+         "tag" : "ssin"
+      },
+      {
+         "listen" : "127.0.0.1",
+         "port" : 9015,
+         "protocol" : "shadowsocks",
+         "settings" : {
+            "method" : "$ssmethod",
+            "network" : "tcp,udp",
+            "ota" : false,
+            "password" : "$sspasswd"
+         },
+         "streamSettings" : {
+            "network" : "domainsocket"
+         }
+      },
+      {
+         "listen" : "127.0.0.1",
+         "port" : 2333,
+         "protocol" : "dokodemo-door",
+         "settings" : {
+            "address" : "127.0.0.1"
+         },
+         "tag" : "api"
+      }
+   ],
+   "outbounds" : [
+      {
+         "protocol" : "freedom",
+         "settings" : {}
+      },
+      {
+         "protocol" : "blackhole",
+         "settings" : {},
+         "tag" : "blocked"
+      },
+      {
+         "protocol" : "freedom",
+         "streamSettings" : {
+            "network" : "domainsocket"
+         },
+         "tag" : "ssmux"
+      }
+   ],
+   "routing" : {
+      "domainStrategy" : "IPIfNonMatch",
+      "rules" : [
+         {
+            "inboundTag" : [ "ssin" ],
+            "outboundTag" : "ssmux",
+            "type" : "field"
+         },
+         {
+            "domain" : [
+               "domain:baidu.com",
+               "domain:qq.com",
+               "domain:sina.com",
+               "geosite:qihoo360"
+            ],
+            "outboundTag" : "blocked",
+            "type" : "field"
+         },
+         {
+            "inboundTag" : [ "api" ],
+            "outboundTag" : "api",
+            "type" : "field"
+         }
+      ]
+   },
+   "transport" : {
+      "dsSettings" : {
+         "path" : "/var/run/ss-loop.sock"
+      }
+   },
+   "api" : {
+      "services" : [ "HandlerService", "LoggerService", "StatsService", "RuleService" ],
+      "tag" : "api"
+   },
+   "policy" : {
+      "levels" : {
+         "0" : {
+            "connIdle" : 300,
+            "downlinkOnly" : 5,
+            "handshake" : 7,
+            "statsUserDownlink" : true,
+            "statsUserUplink" : true,
+            "uplinkOnly" : 2
+         }
+      },
+      "system" : {
+         "statsInboundDownlink" : false,
+         "statsInboundUplink" : false
+      }
+   },
+   "reverse" : {},
+   "sspanel" : {
+      "SpeedTestCheckRate" : 6,
+      "checkRate" : 60,
+      "downWithPanel" : 0,
+      "mysql" : {
+         "dbname" : "demo_dbname",
+         "host" : "https://bing.com",
+         "password" : "demo_dbpassword",
+         "port" : 3306,
+         "user" : "demo_user"
+      },
+      "nodeid" : 4,
+      "panelKey" : "E9n75CeXSd7GD8WwvTl9nIKMmhInbbDcuW5lHr9gZKASFsBi",
+      "panelUrl" : "https://591745.xyz",
+      "paneltype" : 0,
+      "usemysql" : 0
+   },
+   "stats" : {}
 }
 EOF
 elif [[ $install_ss = 1 ]]; then
